@@ -11,6 +11,8 @@ namespace AutoMarketplace.Data
         {
         }
 
+        public DbSet<CarMake> CarMakes { get; set; }
+        public DbSet<CarModel> CarModels { get; set; }
         public int SaveChanges(string userId)
         {
             var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added));

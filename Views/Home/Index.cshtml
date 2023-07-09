@@ -1,8 +1,45 @@
-﻿@{
+﻿@using AutoMarketplace.Extensions;
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome, choose a car make</h1>
+    @if (User.IsAdmin())
+    {
+        <button id="createModel" type="button" class="btn btn-info " data-toggle="modal" data-target="#exampleModal" style="color: white;">Create Model</button>
+    }
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <script>
+        $("#createModel").click(function () {
+            $("#exampleModal").modal("show");
+        });
+        $(".close").click(function () {
+            $("#exampleModal").modal("hide");
+        });
+    </script>
+
+}
