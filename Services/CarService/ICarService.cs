@@ -2,6 +2,6 @@
 {
     public interface ICarService
     {
-        bool CreateModel(string name, IFormFile file);
+        bool CreateMake(string name, IFormFile file);
     }
 }

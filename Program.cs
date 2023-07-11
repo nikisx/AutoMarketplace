@@ -1,5 +1,6 @@
 using AutoMarketplace.Data;
 using AutoMarketplace.Modules;
+using AutoMarketplace.Services.CarService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -26,6 +27,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddTransient<ICarService, CarService>();
 
 var app = builder.Build();
 
