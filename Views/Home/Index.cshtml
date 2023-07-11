@@ -15,10 +15,10 @@
 <section class="car-make-wrapper">
     @foreach (var carMake in Model)
     {
-        <div class="car-make-card">
+        <a asp-controller="Cars" asp-action="CarMakeDetails" asp-route-id="@carMake.Id" class="car-make-card">
             <img src="@carMake.LogoUrl" alt="@carMake.Name" />
             <p>@carMake.Name</p>
-        </div>
+        </a>
     }
 </section>
 

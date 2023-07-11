@@ -19,5 +19,13 @@ namespace AutoMarketplace.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public IActionResult CarMakeDetails(int Id)
+        {
+            var model  = this.carService.GetCarMakeById(Id);
+
+            return View(model);
+        }
     }
 }

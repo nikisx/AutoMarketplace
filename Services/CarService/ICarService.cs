@@ -8,5 +8,7 @@ namespace AutoMarketplace.Services.CarService
         bool CreateMake(string name, IFormFile file);
 
         List<CarMakeModel> GetCarMakeList();
+
+        CarMakeModel GetCarMakeById(int id);
     }
 }

@@ -37,6 +37,21 @@ namespace AutoMarketplace.Services.CarService
             return true;
         }
 
+        public CarMakeModel GetCarMakeById(int id)
+        {
+            var make =  this.dbContext.CarMakes
+                .Include(x => x.Models)
+                .FirstOrDefault(x => x.Id == id);
+
+            return new CarMakeModel
+            {
+                Id = id,
+                Name = make.Name,
+                LogoUrl = make.LogoUrl,
+                ModelsCount = make.Models.Count(),
+            };
+        }
+
         public List<CarMakeModel> GetCarMakeList()
         {
             return this.dbContext.CarMakes
@@ -53,7 +68,7 @@ namespace AutoMarketplace.Services.CarService
         private async Task<string> UploadFile(string folder, string fileName, byte[] buffer)
         {
             //Access token
-            var refreshTOken = "sl.BiDhhQqvF9e2Mlz4eZLa2HeS_15-FCxsvHkpdIhzsmbYfXsP3AVlc7Z02PyOvb80wrQtqPVHKlmy2IsvRFhJN5hvRO4xgXNw-LOSDKgy7N5LehNMOtPVbDtMdWyzWrHQFfmJN1o-yI3F";
+            var refreshTOken = "sl.BiBdvx3eb2fDe6W8dBtELawBvGgPr_JINL9t_-HWmEND9PRPEImJ4jtHd1kWbWvJkc_bNi51Lr0EuIOr0hQgt8j7M8uWS3XqhLawXv6nn4JUF6lLE5DCZEe6xQfy1ZaMhSvAb4oiMmyf";
             
             var dropBoxClient = new DropboxClient(refreshTOken);
             FileMetadata uploadResult = await dropBoxClient.Files.UploadAsync(

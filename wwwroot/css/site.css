@@ -8,6 +8,8 @@ html {
     width: 100px;
     height: 100px;
     font-weight: bold;
+    color: black;
+    text-decoration: none;
 }
 
 .car-make-card:hover {
