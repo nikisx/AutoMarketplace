@@ -1,4 +1,5 @@
 ﻿@using AutoMarketplace.Extensions;
+@model List<CarMakeModel>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -11,7 +12,15 @@
     }
 </div>
 
-<img src="https://uc4da708f535a0d4f46cbad26edb.dl.dropboxusercontent.com/cd/0/get/B_rLoBrCPDAbhr7OWZSDElKZUu9w0Vlf8KiEsb5qILbpIUe0WvBxBxBUv22xSO5pH4OsXiTa5_kDAvNsh24EbKxBMs3zh0tYzTIrF6kaFfp9ftcQUX-2QYUY9RoWv-3opeeCLiuOY5TcJdY0oez6TNAhUkYTaEeMLJUcrHRkiqmUIncZMR5zeQpfnhL_VMhQ974/file" />
+<section class="car-make-wrapper">
+    @foreach (var carMake in Model)
+    {
+        <div class="car-make-card">
+            <img src="@carMake.LogoUrl" alt="@carMake.Name" />
+            <p>@carMake.Name</p>
+        </div>
+    }
+</section>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

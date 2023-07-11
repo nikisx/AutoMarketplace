@@ -1,4 +1,5 @@
 ﻿using AutoMarketplace.Models;
+using AutoMarketplace.Services.CarService;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,15 +8,18 @@ namespace AutoMarketplace.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private ICarService carService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ICarService carService)
         {
+            this.carService = carService;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = this.carService.GetCarMakeList();
+            return View(model);
         }
 
         public IActionResult Privacy()

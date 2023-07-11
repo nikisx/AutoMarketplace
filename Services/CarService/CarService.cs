@@ -5,6 +5,8 @@ using Dropbox.Api;
 using AutoMarketplace.Extensions;
 using Dropbox.Api.Sharing;
 using Dropbox.Api.TeamLog;
+using AutoMarketplace.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoMarketplace.Services.CarService
 {
@@ -35,10 +37,23 @@ namespace AutoMarketplace.Services.CarService
             return true;
         }
 
+        public List<CarMakeModel> GetCarMakeList()
+        {
+            return this.dbContext.CarMakes
+                .Include(x => x.Models)
+                .Select(c => new CarMakeModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    LogoUrl = c.LogoUrl,
+                    ModelsCount = c.Models.Count(),
+                }).OrderBy(x => x.Name).ToList();
+        }
+
         private async Task<string> UploadFile(string folder, string fileName, byte[] buffer)
         {
             //Access token
-            var refreshTOken = "ACCESS_TOKEN";
+            var refreshTOken = "sl.BiDhhQqvF9e2Mlz4eZLa2HeS_15-FCxsvHkpdIhzsmbYfXsP3AVlc7Z02PyOvb80wrQtqPVHKlmy2IsvRFhJN5hvRO4xgXNw-LOSDKgy7N5LehNMOtPVbDtMdWyzWrHQFfmJN1o-yI3F";
             
             var dropBoxClient = new DropboxClient(refreshTOken);
             FileMetadata uploadResult = await dropBoxClient.Files.UploadAsync(

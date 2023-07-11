@@ -2,8 +2,32 @@ html {
   font-size: 14px;
 }
 
+.car-make-card {
+    text-align: center;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    font-weight: bold;
+}
+
+.car-make-card:hover {
+    width: 150px;
+    height: 150px;
+}
+
+.car-make-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.car-make-card > img {
+    width: 100%;
+    height: 100%;
+}
+
 @media (min-width: 768px) {
-  html {
+    html {
     font-size: 16px;
   }
 }
