@@ -19,7 +19,30 @@ namespace AutoMarketplace.Services.CarService
             this.dbContext = dbContext;
         }
 
-        public bool CreateMake(string name, IFormFile file)
+        public bool AddModel(CarModelDto model, string userId)
+        {
+            var newModel = new CarModel
+            {
+                Name = model.Name,
+                NumberOfDoors = model.NumberOfDoors,
+                BodyType = model.BodyType,
+                CombinedFuelConsumptionPer100km = model.CombinedFuelConsumptionPer100km,
+                OutOfTownFuelConsumptionPer100km = model.OutOfTownFuelConsumptionPer100km,
+                InTownFuelConsumptionPer100km = model.InTownFuelConsumptionPer100km,
+                FuelType = (Data.Enum.FuelType)model.FuelType,
+                Engine = model.Engine,
+                MakeId = model.MakeId,
+                StartYearOfProduction = model.StartYearOfProduction,
+                ImageUrl = string.Empty,
+            };
+
+            this.dbContext.CarModels.Add(newModel);
+            this.dbContext.SaveChanges(userId);
+
+            return true;
+        }
+
+        public bool CreateMake(string name, IFormFile file, string userId)
         {
             var buffer = file.GetBytes().GetAwaiter().GetResult(); ;
 
@@ -33,7 +56,7 @@ namespace AutoMarketplace.Services.CarService
 
             this.dbContext.CarMakes.Add(newMake);
 
-            this.dbContext.SaveChanges();
+            this.dbContext.SaveChanges(userId);
             return true;
         }
 

@@ -1,4 +1,6 @@
-﻿using AutoMarketplace.Services.CarService;
+﻿using AutoMarketplace.Extensions;
+using AutoMarketplace.Models;
+using AutoMarketplace.Services.CarService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoMarketplace.Controllers
@@ -15,9 +17,17 @@ namespace AutoMarketplace.Controllers
         [HttpPost]
         public IActionResult AddMake(string name, IFormFile logo)
         {
-            this.carService.CreateMake(name, logo);
+            this.carService.CreateMake(name, logo, User.GetId());
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public IActionResult AddModel(CarModelDto model)
+        {
+            this.carService.AddModel(model, User.GetId());
+
+            return RedirectToAction("CarMakeDetails",new { Id = model.MakeId});
         }
 
         [HttpGet]

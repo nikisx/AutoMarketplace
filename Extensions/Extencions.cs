@@ -10,6 +10,14 @@ namespace AutoMarketplace.Extensions
         public static bool IsAdmin(this ClaimsPrincipal user)
         {
             return user.IsInRole("Admin");
+        } 
+        
+        /// <summary>
+        /// Returns the curren user Id
+        /// </summary>
+        public static string GetId(this ClaimsPrincipal user)
+        {
+            return user.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
         public static async Task<byte[]> GetBytes(this IFormFile formFile)
