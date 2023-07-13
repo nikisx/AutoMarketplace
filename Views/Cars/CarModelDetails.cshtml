@@ -1,8 +1,60 @@
 ﻿@model CarModelDto
 
 <section>
+    <a class="btn btn-info " asp-controller="Cars" asp-action="CarMakeDetails" asp-route-id="@Model.MakeId">Back</a>
     <div style="text-align: center;">
         <img src="@Model.ImageUrl" style="width: 400px; height: 229px;object-fit: cover;" />
         <h1>@Model.Name Information</h1>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Body Type</th>
+                <th scope="col">Start Year Of Production</th>
+                <th scope="col">In Town Fuel Consumption Per 100km</th>
+                <th scope="col">Out Of Town Fuel Consumption Per 100km</th>
+                <th scope="col">Combined Town Fuel Consumption Per 100km</th>
+                <th scope="col">Number Of Doors</th>
+                <th scope="col">Engine</th>
+                <th scope="col">Fuel Type</th>
+                <th scope="col">Tank Volume</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Name</td>
+                <td>@Model.BodyType</td>
+                <td>@Model.StartYearOfProduction</td>
+                <td>@Model.InTownFuelConsumptionPer100km</td>
+                <td>@Model.OutOfTownFuelConsumptionPer100km</td>
+                <td>@Model.CombinedFuelConsumptionPer100km</td>
+                <td>@Model.NumberOfDoors</td>
+                <td>@Model.Engine</td>
+                <td>@Model.FuelString</td>
+                <td>@Model.TankVolume Liters</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Information about max kilometers that can be driven by fuel consumption</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Max Km For Full Tank In Town</th>
+                <th scope="col">Max Km For Full Tank Out Of Town</th>
+                <th scope="col">Max Km For Full Tank Combined</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.MaxKmForFullTankInTown.ToString("0.00") KM.</td>
+                <td>@Model.MaxKmForFullTankOutOfTown.ToString("0.00") KM.</td>
+                <td>@Model.MaxKmForFullTankCombined.ToString("0.00") KM.</td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="display: flex; gap: 20px;justify-content: center;">
+        <button class="btn btn-danger">Delete</button>
+        <button class="btn btn-success">Edit</button>
     </div>
 </section>

@@ -112,8 +112,26 @@ namespace AutoMarketplace.Services.CarService
             {
                 Name = carModel.Make.Name + " " + carModel.Name,
                 ImageUrl = carModel.ImageUrl,
-
+                BodyType = carModel.BodyType,
+                StartYearOfProduction = carModel.StartYearOfProduction,
+                CombinedFuelConsumptionPer100km = carModel.CombinedFuelConsumptionPer100km,
+                InTownFuelConsumptionPer100km = carModel.InTownFuelConsumptionPer100km,
+                OutOfTownFuelConsumptionPer100km = carModel.OutOfTownFuelConsumptionPer100km,
+                NumberOfDoors = carModel.NumberOfDoors,
+                Engine = carModel.Engine,
+                FuelString = carModel.FuelType.ToString(),
+                TankVolume= carModel.TankVolume,
+                Id = id,
+                MakeId = carModel.MakeId,
+                MaxKmForFullTankCombined = GetMaxKmForFullTank(carModel.TankVolume, carModel.CombinedFuelConsumptionPer100km),
+                MaxKmForFullTankInTown = GetMaxKmForFullTank(carModel.TankVolume, carModel.InTownFuelConsumptionPer100km),
+                MaxKmForFullTankOutOfTown = GetMaxKmForFullTank(carModel.TankVolume, carModel.OutOfTownFuelConsumptionPer100km)
             };
+        }
+
+        private double GetMaxKmForFullTank(double fullTankCapacity, double fuelConsumption)
+        {
+            return (100 / fuelConsumption) * fullTankCapacity;
         }
 
         private async Task<string> UploadFile(string folder, string fileName, byte[] buffer)

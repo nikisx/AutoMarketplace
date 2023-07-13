@@ -18,5 +18,9 @@ namespace AutoMarketplace.Models
         public double OutOfTownFuelConsumptionPer100km { get; set; }
         public double CombinedFuelConsumptionPer100km { get; set; }
         public double TankVolume { get; set; }
+        public string FuelString { get; set; }
+        public double MaxKmForFullTankCombined { get; set; }
+        public double MaxKmForFullTankOutOfTown { get; set; }
+        public double MaxKmForFullTankInTown { get; set; }
     }
 }
