@@ -9,6 +9,9 @@ using AutoMarketplace.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Security.Policy;
+using static Dropbox.Api.Files.ListRevisionsMode;
+using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
+using System.Runtime.ConstrainedExecution;
 
 namespace AutoMarketplace.Services.CarService
 {
@@ -188,7 +191,7 @@ namespace AutoMarketplace.Services.CarService
         private async Task<string> UploadFile(string folder, string fileName, byte[] buffer)
         {
             //Access token
-            var refreshTOken = "ACCESS_TOKEN";
+            var refreshTOken = "sl.BiJlr8C120nJm_zmni01r0zuf9rbujxYx-U9HjxiGNh_h5kVodbbbCJ7Dq5B9XrJcbedkm0bGzFGDHed2s2ICK5Hv0T66PMSoVamHBLERidxACIvofblIBiIPMIasRZWXWwoqH9pgtOa";
             
             var dropBoxClient = new DropboxClient(refreshTOken);
             FileMetadata uploadResult = await dropBoxClient.Files.UploadAsync(
@@ -205,6 +208,36 @@ namespace AutoMarketplace.Services.CarService
             var imageUrl = sharedLink.Url.Replace("dl=0", "raw=1");
 
             return imageUrl;
+        }
+
+        public bool EditMake(CarMakeModel model, string userId)
+        {
+            var carMake = this.dbContext.CarMakes.Include(x => x.Models).FirstOrDefault(x => x.Id == model.Id);
+
+            if (carMake == null)
+            {
+                throw new InvalidOperationException("Invalid Car Make Id!");
+            }
+
+            carMake.Name = model.Name;
+            try
+            {
+                if (model.File != null)
+                {
+                    var buffer = model.File.GetBytes().GetAwaiter().GetResult(); ;
+                    var url = this.UploadFile("/test", model.File.FileName, buffer).GetAwaiter().GetResult();
+                    carMake.LogoUrl = url;
+                }
+              
+            }
+            catch (Exception)
+            {
+                this._logger.LogError("Error occured while uploading make image");
+            }
+
+            this.dbContext.SaveChanges(userId);
+
+            return true;
         }
     }
 }

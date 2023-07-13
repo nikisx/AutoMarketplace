@@ -7,6 +7,8 @@
 
         public string LogoUrl { get; set; }
 
+        public IFormFile File { get; set; }
+
         public ICollection<CarModelDto> Models { get; set; }
     }
 }
