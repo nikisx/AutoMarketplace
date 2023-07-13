@@ -191,7 +191,7 @@ namespace AutoMarketplace.Services.CarService
         private async Task<string> UploadFile(string folder, string fileName, byte[] buffer)
         {
             //Access token
-            var refreshTOken = "sl.BiIZ4Qcd8wnxJtru4EkMcRKMcTIcN87Dfu14fud_D_vljcFRPi4ORwptFiAcErra-Hu5QLzUZ6iKYeXBjMHmrSpLvfnu4LcI5ObdjSxCo9BAH62j-aIcD7ytH3240bnITMG-0T5rkCY9";
+            var refreshTOken = "Access_token";
             
             var dropBoxClient = new DropboxClient(refreshTOken);
             FileMetadata uploadResult = await dropBoxClient.Files.UploadAsync(
