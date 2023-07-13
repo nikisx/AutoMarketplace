@@ -5,7 +5,7 @@
     <div style="text-align: center;">
         <img style="width: 300px; height: 300px;" src="@Model.LogoUrl" />
         <h1>@Model.Name</h1>
-        <h2>@Model.ModelsCount Models</h2>
+        <h2>@Model.Models.Count Models</h2>
         @if (User.IsAdmin())
         {
             <div style="display: flex; gap: 20px;justify-content: center;">
@@ -20,6 +20,15 @@
             <button id="createModel" type="button" class="btn btn-info " data-toggle="modal" data-target="#exampleModal" style="color: white;">Create Model</button>
         }
         <h2>Models: </h2>
+        <div>
+            @foreach (var carModel in Model.Models)
+            {   
+                <a class="car-model-card" asp-controller="Cars" asp-action="CarModelDetails" asp-route-id="@carModel.Id">
+                    <img src="@carModel.ImageUrl" style="width: 50px; height: 50px;object-fit: cover;" />
+                  @Model.Name @carModel.Name Details
+                </a>
+            }
+        </div>
     </div>
 </section>
 <!-- Modal -->
@@ -37,7 +46,7 @@
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Name:</label>
                         <input type="text" name="name" class="form-control" id="recipient-name">
-                    </div> 
+                    </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Body type:</label>
                         <input type="text" name="bodyType" class="form-control" id="recipient-name">
@@ -58,18 +67,30 @@
                         <label for="recipient-name" class="col-form-label">In Town Fuel Consumption Per 100km:</label>
                         <input type="number" step="0.01" name="inTownFuelConsumptionPer100km" class="form-control" />
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Out Of Town Fuel Consumption Per 100km:</label>
                         <input type="number" step="0.01" name="outOfTownFuelConsumptionPer100km" class="form-control" />
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Combined Town Fuel Consumption Per 100km:</label>
                         <input type="number" step="0.01" name="combinedFuelConsumptionPer100km" class="form-control" />
+                    </div>
+                    <div class="form-group" style="margin-top: 20px;">
+                        <select class="form-select" name="fuelType" aria-label="Choose fuel type">
+                            <option selected>Choose fuel type</option>
+                            <option value="0">Petrol</option>
+                            <option value="1">Diesel</option>
+                            <option value="2">Electric</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Tank Volume:</label>
+                        <input type="number" step="0.01" name="tankVolume" class="form-control" />
                     </div>
                     <input style="display:none" type="number" name="MakeId" value="@Model.Id" />
 
                     <label class="form-label" for="customFile">Image:</label>
-                    <input type="file" name="logo" class="form-control" id="customFile" />
+                    <input type="file" name="image" class="form-control" id="customFile" />
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>

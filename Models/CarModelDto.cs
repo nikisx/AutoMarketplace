@@ -14,8 +14,9 @@ namespace AutoMarketplace.Models
         public int FuelType { get; set; }
         public int StartYearOfProduction { get; set; }
         public int NumberOfDoors { get; set; }
-        public int InTownFuelConsumptionPer100km { get; set; }
-        public int OutOfTownFuelConsumptionPer100km { get; set; }
-        public int CombinedFuelConsumptionPer100km { get; set; }
+        public double InTownFuelConsumptionPer100km { get; set; }
+        public double OutOfTownFuelConsumptionPer100km { get; set; }
+        public double CombinedFuelConsumptionPer100km { get; set; }
+        public double TankVolume { get; set; }
     }
 }

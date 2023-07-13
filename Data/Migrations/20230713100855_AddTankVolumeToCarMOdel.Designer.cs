@@ -4,6 +4,7 @@ using AutoMarketplace.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoMarketplace.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230713100855_AddTankVolumeToCarMOdel")]
+    partial class AddTankVolumeToCarMOdel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,8 +128,8 @@ namespace AutoMarketplace.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("CombinedFuelConsumptionPer100km")
-                        .HasColumnType("float");
+                    b.Property<int>("CombinedFuelConsumptionPer100km")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");
@@ -146,8 +148,8 @@ namespace AutoMarketplace.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("InTownFuelConsumptionPer100km")
-                        .HasColumnType("float");
+                    b.Property<int>("InTownFuelConsumptionPer100km")
+                        .HasColumnType("int");
 
                     b.Property<int>("MakeId")
                         .HasColumnType("int");
@@ -159,8 +161,8 @@ namespace AutoMarketplace.Data.Migrations
                     b.Property<int>("NumberOfDoors")
                         .HasColumnType("int");
 
-                    b.Property<double>("OutOfTownFuelConsumptionPer100km")
-                        .HasColumnType("float");
+                    b.Property<int>("OutOfTownFuelConsumptionPer100km")
+                        .HasColumnType("int");
 
                     b.Property<int>("StartYearOfProduction")
                         .HasColumnType("int");

@@ -2,6 +2,25 @@ html {
   font-size: 14px;
 }
 
+.car-model-card:hover {
+    background: #ccc6;
+}
+
+.car-model-card {
+    font-weight: bold;
+    border: 2px solid #CCC;
+    cursor: pointer;
+    width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    color: black !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+
 .car-make-card {
     text-align: center;
     cursor: pointer;

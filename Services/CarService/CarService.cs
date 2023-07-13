@@ -7,6 +7,7 @@ using Dropbox.Api.Sharing;
 using Dropbox.Api.TeamLog;
 using AutoMarketplace.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace AutoMarketplace.Services.CarService
 {
@@ -21,6 +22,14 @@ namespace AutoMarketplace.Services.CarService
 
         public bool AddModel(CarModelDto model, string userId)
         {
+            var imageUrl = "/images/images.jpg";
+
+            if (model.Image != null)
+            {
+                var buffer = model.Image.GetBytes().GetAwaiter().GetResult(); ;
+                imageUrl = this.UploadFile("/test", model.Image.FileName, buffer).GetAwaiter().GetResult();
+            }
+
             var newModel = new CarModel
             {
                 Name = model.Name,
@@ -33,7 +42,8 @@ namespace AutoMarketplace.Services.CarService
                 Engine = model.Engine,
                 MakeId = model.MakeId,
                 StartYearOfProduction = model.StartYearOfProduction,
-                ImageUrl = string.Empty,
+                ImageUrl = imageUrl,
+                TankVolume = model.TankVolume,
             };
 
             this.dbContext.CarModels.Add(newModel);
@@ -71,7 +81,12 @@ namespace AutoMarketplace.Services.CarService
                 Id = id,
                 Name = make.Name,
                 LogoUrl = make.LogoUrl,
-                ModelsCount = make.Models.Count(),
+                Models = make.Models.Select(x => new CarModelDto
+                {
+                    Name = x.Name,
+                    Id = x.Id,
+                    ImageUrl = x.ImageUrl,
+                }).ToList(),
             };
         }
 
@@ -84,7 +99,6 @@ namespace AutoMarketplace.Services.CarService
                     Id = c.Id,
                     Name = c.Name,
                     LogoUrl = c.LogoUrl,
-                    ModelsCount = c.Models.Count(),
                 }).OrderBy(x => x.Name).ToList();
         }
 

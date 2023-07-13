@@ -7,6 +7,6 @@
 
         public string LogoUrl { get; set; }
 
-        public int ModelsCount { get; set; }
+        public ICollection<CarModelDto> Models { get; set; }
     }
 }
