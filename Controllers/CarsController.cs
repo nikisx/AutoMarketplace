@@ -37,5 +37,13 @@ namespace AutoMarketplace.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult CarModelDetails(int Id)
+        {
+            var model  = this.carService.GetCarModelById(Id);
+
+            return View(model);
+        }
     }
 }

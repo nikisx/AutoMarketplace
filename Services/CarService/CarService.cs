@@ -102,6 +102,20 @@ namespace AutoMarketplace.Services.CarService
                 }).OrderBy(x => x.Name).ToList();
         }
 
+        public CarModelDto GetCarModelById(int id)
+        {
+            var carModel = this.dbContext.CarModels
+                .Include(x => x.Make)
+                .FirstOrDefault(x => x.Id == id);
+
+            return new CarModelDto
+            {
+                Name = carModel.Make.Name + " " + carModel.Name,
+                ImageUrl = carModel.ImageUrl,
+
+            };
+        }
+
         private async Task<string> UploadFile(string folder, string fileName, byte[] buffer)
         {
             //Access token
