@@ -44,6 +44,9 @@
                 </button>
             </div>
             <div class="modal-body" style="max-height: 83vh;overflow-y: scroll;">
+                <div id="error" class="alert alert-danger" style="display: none" role="alert">
+                    All fields without image are requiered !
+                </div>
                 <form asp-controller="Cars" asp-action="AddModel" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Name:</label>
@@ -159,10 +162,25 @@
 @section Scripts {
 
     <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        console.log(urlParams.has('showError'));
+        if (urlParams.has('showError')) {
+            document.getElementById("error").style.display = 'block';
+            document.getElementById("exampleModal").style.display = 'block';
+            document.getElementById("exampleModal").style.opacity = 1;
+            document.getElementById("exampleModal").style.background = 'rgb(18 19 18 / 65%)';
+            document.getElementById("exampleModal").style.paddingTop = '50px';
+        }
         $("#createModel").click(function () {
             $("#exampleModal").modal("show");
         });
         $(".close").click(function () {
+            if (urlParams.has('showError')) {
+                document.getElementById("exampleModal").style.display = 'none';
+                document.getElementById("exampleModal").style.opacity = '';
+                document.getElementById("exampleModal").style.background = '';
+                document.getElementById("exampleModal").style.paddingTop = '';
+            }
             $("#exampleModal").modal("hide");
         });
         $("#deleteModalBtn").click(function () {

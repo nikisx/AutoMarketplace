@@ -16,8 +16,14 @@ namespace AutoMarketplace.Controllers
         [HttpPost]
         public IActionResult AddMake(string name, IFormFile logo)
         {
-            this.carService.CreateMake(name, logo, User.GetId());
+            if (string.IsNullOrWhiteSpace(name) || logo == null)
+            {
+               
+                return RedirectToAction("Index", "Home", new {showError = true});
+            }
 
+            this.carService.CreateMake(name, logo, User.GetId());
+                
             return RedirectToAction("Index", "Home");
         }
 
@@ -40,6 +46,11 @@ namespace AutoMarketplace.Controllers
         [HttpPost]
         public IActionResult AddModel(CarModelDto model)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("CarMakeDetails", new { Id = model.MakeId, showError = true });
+            }
+
             this.carService.AddModel(model, User.GetId());
 
             return RedirectToAction("CarMakeDetails",new { Id = model.MakeId});

@@ -96,15 +96,15 @@
                 <form asp-controller="Cars" asp-action="EditModel" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Name:</label>
-                        <input type="text" value="@Model.Name.Split()[1]" name="name" class="form-control" id="recipient-name">
+                        <input type="text" value="@Model.Name.Split()[1]" asp-for="Name" class="form-control" id="recipient-name">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Body type:</label>
-                        <input type="text" value="@Model.BodyType" name="bodyType" class="form-control" id="recipient-name">
+                        <input type="text" value="@Model.BodyType" asp-for="BodyType" class="form-control" id="recipient-name">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Engine:</label>
-                        <input type="text" value="@Model.Engine" name="engine" class="form-control" id="recipient-name">
+                        <input type="text" value="@Model.Engine" asp-for="Engine" class="form-control" id="recipient-name">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Start of production year:</label>

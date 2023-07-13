@@ -20,10 +20,11 @@
             <p>@carMake.Name</p>
         </a>
     }
+
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -33,6 +34,10 @@
                 </button>
             </div>
             <div class="modal-body">
+
+                <div id="error" class="alert alert-danger" style="display: none" role="alert">
+                    Name and logo image are required !
+                </div>
                 <form asp-controller="Cars" asp-action="AddMake" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Name:</label>
@@ -41,10 +46,10 @@
 
                     <label class="form-label" for="customFile">Logo:</label>
                     <input type="file" name="logo" class="form-control" id="customFile" />
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -53,10 +58,27 @@
 @section Scripts {
 
     <script>
+
+        var urlParams = new URLSearchParams(window.location.search);
+        console.log(urlParams.has('showError'));
+        if (urlParams.has('showError')) {
+            document.getElementById("error").style.display = 'block';
+            document.getElementById("exampleModal").style.display = 'block';
+            document.getElementById("exampleModal").style.opacity = 1;
+            document.getElementById("exampleModal").style.background = 'rgb(18 19 18 / 65%)';
+            document.getElementById("exampleModal").style.paddingTop = '50px';
+        }
+
         $("#createModel").click(function () {
             $("#exampleModal").modal("show");
         });
         $(".close").click(function () {
+            if (urlParams.has('showError')) {
+                document.getElementById("exampleModal").style.display = 'none';
+                document.getElementById("exampleModal").style.opacity = '';
+                document.getElementById("exampleModal").style.background = '';
+                document.getElementById("exampleModal").style.paddingTop = '';
+            }
             $("#exampleModal").modal("hide");
         });
     </script>

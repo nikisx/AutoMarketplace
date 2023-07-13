@@ -19,6 +19,7 @@ namespace AutoMarketplace.Controllers
         public IActionResult Index()
         {
             var model = this.carService.GetCarMakeList();
+           
             return View(model);
         }
 
