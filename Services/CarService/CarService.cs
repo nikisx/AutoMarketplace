@@ -70,6 +70,21 @@ namespace AutoMarketplace.Services.CarService
             return true;
         }
 
+        public bool DeleteModel(int id)
+        {
+            var carModel = this.dbContext.CarModels.FirstOrDefault(x => x.Id == id);
+
+            if (carModel == null)
+            {
+                throw new InvalidOperationException("Invalid Car Model Id!");
+            }
+
+            this.dbContext.CarModels.Remove(carModel);
+            this.dbContext.SaveChanges();
+
+            return true;
+        }
+
         public CarMakeModel GetCarMakeById(int id)
         {
             var make =  this.dbContext.CarMakes

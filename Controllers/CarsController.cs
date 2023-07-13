@@ -30,6 +30,14 @@ namespace AutoMarketplace.Controllers
             return RedirectToAction("CarMakeDetails",new { Id = model.MakeId});
         }
 
+        [HttpPost]
+        public IActionResult DeleteModel(int id, int carMakeId)
+        {
+            this.carService.DeleteModel(id);
+
+            return RedirectToAction("CarMakeDetails",new { Id = carMakeId });
+        }
+
         [HttpGet]
         public IActionResult CarMakeDetails(int Id)
         {
