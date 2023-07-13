@@ -8,16 +8,18 @@ using Dropbox.Api.TeamLog;
 using AutoMarketplace.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Security.Policy;
 
 namespace AutoMarketplace.Services.CarService
 {
     public class CarService : ICarService
     {
         private ApplicationDbContext dbContext;
-
-        public CarService(ApplicationDbContext dbContext)
+        private readonly ILogger<CarService> _logger;
+        public CarService(ApplicationDbContext dbContext, ILogger<CarService> logger)
         {
             this.dbContext = dbContext;
+            this._logger = logger;
         }
 
         public bool AddModel(CarModelDto model, string userId)
@@ -26,8 +28,16 @@ namespace AutoMarketplace.Services.CarService
 
             if (model.Image != null)
             {
-                var buffer = model.Image.GetBytes().GetAwaiter().GetResult(); ;
-                imageUrl = this.UploadFile("/test", model.Image.FileName, buffer).GetAwaiter().GetResult();
+                try
+                {
+                    var buffer = model.Image.GetBytes().GetAwaiter().GetResult(); ;
+                    imageUrl = this.UploadFile("/test", model.Image.FileName, buffer).GetAwaiter().GetResult();
+                }
+                catch (Exception)
+                {
+                    this._logger.LogError("Error occured while uploading model image");
+                }
+               
             }
 
             var newModel = new CarModel
@@ -54,9 +64,18 @@ namespace AutoMarketplace.Services.CarService
 
         public bool CreateMake(string name, IFormFile file, string userId)
         {
-            var buffer = file.GetBytes().GetAwaiter().GetResult(); ;
+            var url = "/images/images.jpg";
 
-            var url = this.UploadFile("/test", file.FileName, buffer).GetAwaiter().GetResult();
+            try
+            {
+                var buffer = file.GetBytes().GetAwaiter().GetResult(); ;
+                url = this.UploadFile("/test", file.FileName, buffer).GetAwaiter().GetResult();
+            }
+            catch (Exception)
+            {
+                this._logger.LogError("Error occured while uploading make image");
+            }
+             
 
             var newMake = new CarMake
             {
@@ -67,6 +86,23 @@ namespace AutoMarketplace.Services.CarService
             this.dbContext.CarMakes.Add(newMake);
 
             this.dbContext.SaveChanges(userId);
+            return true;
+        }
+
+        public bool DeleteMake(int id)
+        {
+            var carMake = this.dbContext.CarMakes.Include(x => x.Models).FirstOrDefault(x => x.Id == id);
+
+            if (carMake == null)
+            {
+                throw new InvalidOperationException("Invalid Car Make Id!");
+            }
+
+            carMake.Models.Clear();
+
+            this.dbContext.CarMakes.Remove(carMake);
+            this.dbContext.SaveChanges();
+
             return true;
         }
 

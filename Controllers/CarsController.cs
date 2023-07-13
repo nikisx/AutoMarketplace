@@ -8,7 +8,6 @@ namespace AutoMarketplace.Controllers
     public class CarsController : Controller
     {
         private readonly ICarService carService;
-
         public CarsController(ICarService carService)
         {
             this.carService = carService;
@@ -36,6 +35,14 @@ namespace AutoMarketplace.Controllers
             this.carService.DeleteModel(id);
 
             return RedirectToAction("CarMakeDetails",new { Id = carMakeId });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteMake(int id)
+        {
+            this.carService.DeleteMake(id);
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
