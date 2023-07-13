@@ -191,7 +191,7 @@ namespace AutoMarketplace.Services.CarService
         private async Task<string> UploadFile(string folder, string fileName, byte[] buffer)
         {
             //Access token
-            var refreshTOken = "sl.BiJlr8C120nJm_zmni01r0zuf9rbujxYx-U9HjxiGNh_h5kVodbbbCJ7Dq5B9XrJcbedkm0bGzFGDHed2s2ICK5Hv0T66PMSoVamHBLERidxACIvofblIBiIPMIasRZWXWwoqH9pgtOa";
+            var refreshTOken = "sl.BiIZ4Qcd8wnxJtru4EkMcRKMcTIcN87Dfu14fud_D_vljcFRPi4ORwptFiAcErra-Hu5QLzUZ6iKYeXBjMHmrSpLvfnu4LcI5ObdjSxCo9BAH62j-aIcD7ytH3240bnITMG-0T5rkCY9";
             
             var dropBoxClient = new DropboxClient(refreshTOken);
             FileMetadata uploadResult = await dropBoxClient.Files.UploadAsync(
@@ -233,6 +233,46 @@ namespace AutoMarketplace.Services.CarService
             catch (Exception)
             {
                 this._logger.LogError("Error occured while uploading make image");
+            }
+
+            this.dbContext.SaveChanges(userId);
+
+            return true;
+        }
+
+        public bool EditModel(CarModelDto model, string userId)
+        {
+            var carModel = this.dbContext.CarModels.FirstOrDefault(x => x.Id == model.Id);
+
+            if (carModel == null)
+            {
+                throw new InvalidOperationException("Invalid Car Model Id!");
+            }
+
+            carModel.Name = model.Name;
+            carModel.NumberOfDoors = model.NumberOfDoors;
+            carModel.BodyType = model.BodyType;
+            carModel.FuelType = (Data.Enum.FuelType)model.FuelType;
+            carModel.InTownFuelConsumptionPer100km = model.InTownFuelConsumptionPer100km;
+            carModel.OutOfTownFuelConsumptionPer100km = model.OutOfTownFuelConsumptionPer100km;
+            carModel.CombinedFuelConsumptionPer100km = model.CombinedFuelConsumptionPer100km;
+            carModel.TankVolume = model.TankVolume;
+            carModel.StartYearOfProduction = model.StartYearOfProduction;
+            carModel.Engine = model.Engine;
+
+            try
+            {
+                if (model.Image != null)
+                {
+                    var buffer = model.Image.GetBytes().GetAwaiter().GetResult(); ;
+                    var url = this.UploadFile("/test", model.Image.FileName, buffer).GetAwaiter().GetResult();
+                    carModel.ImageUrl = url;
+                }
+
+            }
+            catch (Exception)
+            {
+                this._logger.LogError("Error occured while uploading model image");
             }
 
             this.dbContext.SaveChanges(userId);

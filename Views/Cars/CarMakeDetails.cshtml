@@ -1,7 +1,9 @@
 ﻿@using AutoMarketplace.Extensions;
 @model CarMakeModel
 
+<a class="btn btn-info " asp-controller="Home" asp-action="Index">Back</a>
 <section style="display: flex;justify-content: space-around; ">
+
     <div style="text-align: center;">
         <img style="width: 300px; height: 300px;" src="@Model.LogoUrl" />
         <h1>@Model.Name</h1>
@@ -22,10 +24,10 @@
         <h2>Models: </h2>
         <div>
             @foreach (var carModel in Model.Models)
-            {   
+            {
                 <a class="car-model-card" asp-controller="Cars" asp-action="CarModelDetails" asp-route-id="@carModel.Id">
                     <img src="@carModel.ImageUrl" style="width: 50px; height: 50px;object-fit: cover;" />
-                  @Model.Name @carModel.Name Details
+                    @Model.Name @carModel.Name Details
                 </a>
             }
         </div>
@@ -139,7 +141,7 @@
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Name:</label>
                         <input type="text" value="@Model.Name" name="name" class="form-control" id="recipient-name">
-                        <input type="number" value="@Model.Id" name="id" style="display: none"   class="form-control" id="recipient-name">
+                        <input type="number" value="@Model.Id" name="id" style="display: none" class="form-control" id="recipient-name">
                     </div>
 
                     <label class="form-label" for="customFile">Logo:</label>

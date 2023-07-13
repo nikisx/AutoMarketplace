@@ -30,6 +30,14 @@ namespace AutoMarketplace.Controllers
         }
 
         [HttpPost]
+        public IActionResult EditModel(CarModelDto model)
+        {
+            this.carService.EditModel(model, User.GetId());
+
+            return RedirectToAction("CarModelDetails", new { Id = model.Id });
+        }
+
+        [HttpPost]
         public IActionResult AddModel(CarModelDto model)
         {
             this.carService.AddModel(model, User.GetId());
