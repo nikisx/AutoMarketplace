@@ -6,6 +6,11 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome, choose a car make</h1>
+    <form method="post" asp-controller="Home" asp-action="Index" class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+        <input name="searchWord" class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search...">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+   
     @if (User.IsAdmin())
     {
         <button id="createModel" type="button" class="btn btn-info " data-toggle="modal" data-target="#exampleModal" style="color: white;">Create Make</button>
@@ -13,13 +18,17 @@
 </div>
 
 <section class="car-make-wrapper">
-    @foreach (var carMake in Model)
+    @if (Model != null)
     {
-        <a asp-controller="Cars" asp-action="CarMakeDetails" asp-route-id="@carMake.Id" class="car-make-card">
-            <img src="@carMake.LogoUrl" alt="@carMake.Name" />
-            <p>@carMake.Name</p>
-        </a>
+        foreach (var carMake in Model)
+        {
+            <a asp-controller="Cars" asp-action="CarMakeDetails" asp-route-id="@carMake.Id" class="car-make-card">
+                <img src="@carMake.LogoUrl" alt="@carMake.Name" />
+                <p>@carMake.Name</p>
+            </a>
+        }
     }
+   
 
 </section>
 

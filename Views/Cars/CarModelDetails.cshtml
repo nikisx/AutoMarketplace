@@ -1,4 +1,5 @@
-﻿@model CarModelDto
+﻿@using AutoMarketplace.Extensions;
+@model CarModelDto
 
 <section>
     <a class="btn btn-info " asp-controller="Cars" asp-action="CarMakeDetails" asp-route-id="@Model.MakeId">Back</a>
@@ -53,10 +54,14 @@
             </tr>
         </tbody>
     </table>
-    <div style="display: flex; gap: 20px;justify-content: center;">
-        <button id="deleteModalBtn" class="btn btn-danger">Delete</button>
-        <button id="editModalBtn" class="btn btn-success">Edit</button>
-    </div>
+    @if (User.IsAdmin())
+    {
+        <div style="display: flex; gap: 20px;justify-content: center;">
+            <button id="deleteModalBtn" class="btn btn-danger">Delete</button>
+            <button id="editModalBtn" class="btn btn-success">Edit</button>
+        </div>
+    }
+  
 </section>
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

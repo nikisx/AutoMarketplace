@@ -152,7 +152,6 @@ namespace AutoMarketplace.Services.CarService
         public List<CarMakeModel> GetCarMakeList()
         {
             return this.dbContext.CarMakes
-                .Include(x => x.Models)
                 .Select(c => new CarMakeModel
                 {
                     Id = c.Id,
@@ -283,6 +282,18 @@ namespace AutoMarketplace.Services.CarService
             this.dbContext.SaveChanges(userId);
 
             return true;
+        }
+
+        public List<CarMakeModel> GetSerachedCarMakes(string searchWord)
+        {
+            return this.dbContext.CarMakes
+              .Where(c => c.Name.StartsWith(searchWord) || c.Name.Contains(searchWord))
+              .Select(c => new CarMakeModel
+              {
+                  Id = c.Id,
+                  Name = c.Name,
+                  LogoUrl = c.LogoUrl,
+              }).OrderBy(x => x.Name).ToList();
         }
     }
 }

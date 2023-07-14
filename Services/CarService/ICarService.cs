@@ -13,6 +13,7 @@ namespace AutoMarketplace.Services.CarService
         bool DeleteMake(int id);
 
         List<CarMakeModel> GetCarMakeList();
+        List<CarMakeModel> GetSerachedCarMakes(string searchWord);
 
         CarMakeModel GetCarMakeById(int id, int pageNumber = 1);
         CarModelDto GetCarModelById(int id);

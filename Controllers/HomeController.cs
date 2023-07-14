@@ -18,8 +18,23 @@ namespace AutoMarketplace.Controllers
 
         public IActionResult Index()
         {
-            var model = this.carService.GetCarMakeList();
+            var model =  this.carService.GetCarMakeList();
            
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Index(string searchWord)
+        {
+            if (string.IsNullOrEmpty(searchWord))
+            {
+                var allMakesModel = this.carService.GetCarMakeList();
+
+                return View(allMakesModel);
+            }
+
+            var model = carService.GetSerachedCarMakes(searchWord);
+
             return View(model);
         }
 
