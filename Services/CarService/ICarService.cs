@@ -14,7 +14,7 @@ namespace AutoMarketplace.Services.CarService
 
         List<CarMakeModel> GetCarMakeList();
 
-        CarMakeModel GetCarMakeById(int id);
+        CarMakeModel GetCarMakeById(int id, int pageNumber = 1);
         CarModelDto GetCarModelById(int id);
     }
 }

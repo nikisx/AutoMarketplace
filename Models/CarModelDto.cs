@@ -9,8 +9,8 @@ namespace AutoMarketplace.Models
         public int MakeId { get; set; }
         [Required]
         public string Name { get; set; }
-        public IFormFile Image { get; set; }
-        public string ImageUrl { get; set; }
+        public IFormFile? Image { get; set; }
+        public string? ImageUrl { get; set; }
         [Required]
         public string BodyType { get; set; }
         [Required]
@@ -29,7 +29,7 @@ namespace AutoMarketplace.Models
         public double CombinedFuelConsumptionPer100km { get; set; }
         [Required]
         public double TankVolume { get; set; }
-        public string FuelString { get; set; }
+        public string? FuelString { get; set; }
         public double MaxKmForFullTankCombined { get; set; }
         public double MaxKmForFullTankOutOfTown { get; set; }
         public double MaxKmForFullTankInTown { get; set; }

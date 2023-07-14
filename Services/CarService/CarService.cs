@@ -12,6 +12,7 @@ using System.Security.Policy;
 using static Dropbox.Api.Files.ListRevisionsMode;
 using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
 using System.Runtime.ConstrainedExecution;
+using AutoMarketplace.Modules;
 
 namespace AutoMarketplace.Services.CarService
 {
@@ -124,23 +125,27 @@ namespace AutoMarketplace.Services.CarService
             return true;
         }
 
-        public CarMakeModel GetCarMakeById(int id)
+        public CarMakeModel GetCarMakeById(int id, int pageNumber = 1)
         {
             var make =  this.dbContext.CarMakes
                 .Include(x => x.Models)
                 .FirstOrDefault(x => x.Id == id);
+
+            var mappedModels = make.Models.Select(x => new CarModelDto
+            {
+                Name = x.Name,
+                Id = x.Id,
+                ImageUrl = x.ImageUrl,
+            }).ToList();
+
+            var models = new PaginatedList<CarModelDto>().Create(mappedModels, pageNumber, 3);
 
             return new CarMakeModel
             {
                 Id = id,
                 Name = make.Name,
                 LogoUrl = make.LogoUrl,
-                Models = make.Models.Select(x => new CarModelDto
-                {
-                    Name = x.Name,
-                    Id = x.Id,
-                    ImageUrl = x.ImageUrl,
-                }).ToList(),
+                Models = models,
             };
         }
 

@@ -1,4 +1,6 @@
-﻿namespace AutoMarketplace.Models
+﻿using AutoMarketplace.Modules;
+
+namespace AutoMarketplace.Models
 {
     public class CarMakeModel
     {
@@ -9,6 +11,6 @@
 
         public IFormFile File { get; set; }
 
-        public ICollection<CarModelDto> Models { get; set; }
+        public PaginatedList<CarModelDto> Models { get; set; }
     }
 }

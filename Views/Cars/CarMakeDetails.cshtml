@@ -1,5 +1,9 @@
 ﻿@using AutoMarketplace.Extensions;
 @model CarMakeModel
+@{
+    var prevDisabled = !Model.Models.PreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Models.NextPage ? "disabled" : "";
+}
 
 <a class="btn btn-info " asp-controller="Home" asp-action="Index">Back</a>
 <section style="display: flex;justify-content: space-around; ">
@@ -31,7 +35,32 @@
                 </a>
             }
         </div>
+        @if (Model.Models.Any())
+        {
+            <div style="margin-top: 20px;">
+                <a asp-action="CarMakeDetails" asp-route-id="@Model.Id" asp-route-pageNumber="@(Model.Models.PageIndex - 1) " class="btn @prevDisabled">Previous</a>
+                @for (int i = Model.Models.PageIndex - 3; i < Model.Models.PageIndex; i++)
+                {
+                    if (i > 0)
+                    {
+                        <a class="btn " style="width: 40px" asp-action="CarMakeDetails" asp-route-id="@Model.Id" asp-route-pageNumber="@i">@i</a>
+                    }
+                }
+                <span style="width: 40px;" class="btn btn-primary">@Model.Models.PageIndex</span>
+
+                @for (int i = Model.Models.PageIndex + 1; i <= Model.Models.PageIndex + 3; i++)
+                {
+                    if (i <= Model.Models.TotalPages)
+                    {
+                        <a class="btn " style="width: 40px" asp-action="CarMakeDetails" asp-route-id="@Model.Id" asp-route-pageNumber="@i">@i </a>
+                    }
+                }
+                <a asp-action="CarMakeDetails" asp-route-id="@Model.Id" asp-route-pageNumber="@(Model.Models.PageIndex + 1) " class="btn @nextDisabled">Next</a>
+            </div>
+        }
+       
     </div>
+
 </section>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

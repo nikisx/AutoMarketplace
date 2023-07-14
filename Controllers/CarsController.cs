@@ -73,9 +73,9 @@ namespace AutoMarketplace.Controllers
         }
 
         [HttpGet]
-        public IActionResult CarMakeDetails(int Id)
+        public IActionResult CarMakeDetails(int Id, int pageNumber = 1)
         {
-            var model  = this.carService.GetCarMakeById(Id);
+            var model  = this.carService.GetCarMakeById(Id, pageNumber);
 
             return View(model);
         }
